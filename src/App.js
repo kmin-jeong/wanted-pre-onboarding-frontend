@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { Switch, Route, Redirect } from "react-router-dom";
+import { useContext } from "react";
+
+import AuthPage from "./pages/authpage";
+import { Todo } from "./pages/todo";
+import AuthContext from "./state/AuthState";
+import Layout from "./components/layout";
+
+// import logo from './logo.svg';
+// import './App.css';
+export const API_URL = `https://www.pre-onboarding-selection-task.shop`;
 
 function App() {
+  const authCtx = useContext(AuthContext);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <Switch>
+        <Route path="/" exact>
+          <AuthPage />
+        </Route>
+        {!authCtx.isLoggedIn && (
+          <Route path="/auth">
+            <AuthPage />
+          </Route>
+        )}
+        <Route path="/todo">
+          {authCtx.isLoggedIn && <Todo />}
+          {!authCtx.isLoggedIn && <Redirect to="auth" />}
+        </Route>
+      </Switch>
+    </Layout>
   );
 }
 
