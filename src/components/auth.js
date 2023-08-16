@@ -35,17 +35,20 @@ export const Auth = () => {
       url = `${url}/auth/signup`;
     }
 
-    axios({
-      method: "POST",
-      url: url,
-      data: {
-        email: enteredEmail,
-        password: enteredPassword,
-      },
-    })
+    let data = {
+      email: enteredEmail,
+      password: enteredPassword,
+    };
+    axios
+      // eslint-disable-next-line no-undef
+      .post(url, JSON.stringify(data), {
+        headers: {
+          "Content-Type": `application/json`,
+        },
+      })
       .then((res) => {
-        setIsLoading(false);
-
+        // setIsLoading(false);
+        console.log(data);
         if (res.data.access_token) {
           // success
           console.log("data", res.data);
