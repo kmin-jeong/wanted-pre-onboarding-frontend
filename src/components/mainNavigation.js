@@ -14,7 +14,7 @@ export const MainNavigation = () => {
   return (
     <header>
       <Link to="/">
-        <div>React Assignment</div>
+        <div>원티드 프리온보딩 과제</div>
       </Link>
       <nav>
         <ul>
